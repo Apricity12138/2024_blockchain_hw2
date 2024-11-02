@@ -115,9 +115,9 @@ const HousePage = () => {
             setMyHouses(houses1);
             setSaleHouses(houses2);
         }
-        if(account !== '') {
-            fetchMyHouses()
-        }
+
+        fetchMyHouses()
+
     }, [account, houseList, houseContract]);
 
 
@@ -190,20 +190,17 @@ const HousePage = () => {
             alert('You have not connected wallet yet.')
             return
         }
-
         if (houseContract) {
             try {
                 if (newPrice[index] <= 0) {
                     alert("the price should not be less or equal to zero!");
                 } else {
-
                     await houseContract.methods.setOnSale(index, newPrice[index]).send({
                         from: account
                     })
                     alert('You have set the house on sale.')
                     let a = newTime;
                 }
-
             } catch (error: any) {
                 console.log(error)
             }
@@ -226,7 +223,6 @@ const HousePage = () => {
             alert('You have not connected wallet yet.')
             return
         }
-
         if (houseContract && myERC20Contract) {
             try {
                 await houseContract.methods.buyHouse(index).send({
@@ -248,7 +244,6 @@ const HousePage = () => {
             alert('You have not connected wallet yet.')
             return
         }
-
         if (houseContract && myERC20Contract) {
             try {
                 if (newPrice[index] <= 0) {
@@ -271,12 +266,12 @@ const HousePage = () => {
 
     const handleTime = async (index: number) => {
         let a = newTime;
-        //a[index] = timeHandler(houseList[index].listedTimestamp/10000);
+        //a[index] = timeHandler(houseList[index].listedTimestamp);
         setNewTime(a);
     }
 
     const timeHandler = (timestamp: number) => {
-        const date = new Date(timestamp);
+        const date = new Date(timestamp/10000);
         return date.toLocaleString();
     }
 
