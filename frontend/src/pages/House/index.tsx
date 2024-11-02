@@ -270,7 +270,7 @@ const HousePage = () => {
 
     const handleTime = async (index: number) => {
         let a = newTime;
-        a[index] = timeHandler(houseList[index].listedTimestamp);
+        //a[index] = timeHandler(houseList[index].listedTimestamp/10000);
         setNewTime(a);
     }
 
@@ -293,7 +293,7 @@ const HousePage = () => {
                 <div>管理员地址：{managerAccount}</div>
                 {account === '' && <Button onClick={onClickConnectWallet}>连接钱包</Button>}
                 <div>当前用户地址：{account === '' ? '无用户连接' : account}</div>
-                <div>当前用户余额：{account === '' ? 0 : accountBalance.toString()}</div>
+                <div>当前用户余额：{account === '' ? 0 : accountBalance.toString()} ZJUT</div>
                 <Button onClick={onClaimTokenAirdrop}>领取浙大币空投</Button>
                 <h2>我的房产</h2>
                 <ul>
@@ -302,23 +302,21 @@ const HousePage = () => {
                             <div>房产ID：{houseList[i].id.toString()}</div>
                             <img src={`/house${houseList[i].id}.jpg`} style={{width: '500px', height: 'auto'}}/>
                             <div>出售状态：{houseList[i].price > 0 ? '是' : '否'}</div>
-                            <input
+                            {houseList[i].price ==0 && <input
                                 type="number"
                                 placeholder="输入出售价格"
                                 onChange={(e) => handlePriceChange(i, Number(e.target.value))}
-                                style={{visibility: houseList[i].price == 0 ? 'visible' : 'hidden'}}
-                            />
-                            <Button style={{width: '100px', visibility: houseList[i].price == 0 ? 'visible' : 'hidden'}}
-                                    onClick={() => handleConfirmSellHouse(i)}>出售</Button>
+                            />}
+                            {houseList[i].price == 0 && <Button style={{width: '100px'}}
+                                    onClick={() => {handleConfirmSellHouse(i).then(r => handleTime(i))}}>出售</Button>}
                             <br/>
-                            <input
+                            {houseList[i].price != 0 && <input
                                 type="number"
                                 placeholder="输入修改价格"
                                 onChange={(e) => handlePriceChange(i, Number(e.target.value))}
-                                style={{visibility: houseList[i].price != 0 ? 'visible' : 'hidden'}}
-                            />
-                            <Button style={{width: '100px', visibility: houseList[i].price != 0 ? 'visible' : 'hidden'}}
-                                    onClick={() => handleChangeHousePrice(i)}>修改价格</Button>
+                            />}
+                            {houseList[i].price != 0 && <Button style={{width: '100px'}}
+                                    onClick={() => handleChangeHousePrice(i)}>修改价格</Button>}
                         </li>
                     ))}
                 </ul>
@@ -328,12 +326,12 @@ const HousePage = () => {
                         <li key={i}>
                             <div>房产ID：{houseList[i].id.toString()}</div>
                             <img src={`/house${houseList[i].id}.jpg`} style={{width: '500px', height: 'auto'}}/>
-                            <div>价格：{houseList[i].price.toString()}</div>
+                            <div>价格：{houseList[i].price.toString()} ZJUT</div>
                             <div>拥有者：{houseList[i].owner}</div>
-                            <Button style={{
+                            <div>挂牌时间：{newTime[i]}</div>
+                            {houseList[i].owner != account && <Button style={{
                                 width: '100px',
-                                visibility: (houseList[i].owner != account) ? 'visible' : 'hidden'
-                            }} onClick={() => handleBuyHouse(i)}>购买</Button>
+                            }} onClick={() => handleBuyHouse(i)}>购买</Button>}
                         </li>
                     ))}
                 </ul>
