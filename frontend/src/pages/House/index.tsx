@@ -95,8 +95,9 @@ const HousePage = () => {
             }));
             setHouseList(_houses);
         }
-
-        fetchHouses()
+        if(account !== '') {
+            fetchHouses()
+        }
     }, [houseContract]);
 
     useEffect(() => {
