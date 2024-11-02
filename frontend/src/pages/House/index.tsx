@@ -199,7 +199,7 @@ const HousePage = () => {
                         from: account
                     })
                     alert('You have set the house on sale.')
-                    let a = newTime;
+                    // let a = newTime;
                 }
             } catch (error: any) {
                 console.log(error)
@@ -207,7 +207,7 @@ const HousePage = () => {
         } else {
             alert('Contract not exists.')
         }
-        let a = newTime;
+        // let a = newTime;
         window.location.reload();
     }
 
