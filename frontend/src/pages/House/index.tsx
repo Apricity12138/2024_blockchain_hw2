@@ -193,7 +193,7 @@ const HousePage = () => {
         if (houseContract) {
             try {
                 if (newPrice[index] <= 0) {
-                    alert("Invalid input! The price should not be ≤ zero!");
+                    alert("the price should not be less or equal to zero!");
                 } else {
 
                     await houseContract.methods.setOnSale(index, newPrice[index]).send({
